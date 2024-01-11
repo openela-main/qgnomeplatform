@@ -1,7 +1,7 @@
 
 Name:           qgnomeplatform
-Version:        0.8.4
-Release:        2%{?dist}
+Version:        0.9.0
+Release:        1%{?dist}
 Summary:        Qt Platform Theme aimed to accommodate Gnome settings
 
 License:        LGPLv2+
@@ -9,7 +9,10 @@ URL:            https://github.com/MartinBriza/QGnomePlatform
 Source0:        https://github.com/MartinBriza/QGnomePlatform/archive/%{version}/QGnomePlatform-%{version}.tar.gz
 
 # Upstream patches
-Patch0:         qgnomeplatform-use-more-updated-window-states-value.patch
+Patch0:         qgnomeplatform-fix-window-content-geometry-for-qt5-when-shadows-are-enabled.patch
+Patch1:         qgnomeplatform-add-support-for-kcolorscheme-using-adwaita-like-color-schemes.patch
+
+Patch50:        qgnomeplatform-use-more-updated-window-states-value.patch
 
 BuildRequires:  make
 BuildRequires:  pkgconfig(gio-2.0)
@@ -50,11 +53,16 @@ modifying them - making them fit into the environment as well as possible.
 %files
 %doc README.md
 %license LICENSE
+%{_datadir}/color-schemes/*.colors
 %{_qt5_libdir}/libqgnomeplatform.so
-%{_qt5_libdir}/qt5/plugins/platformthemes/libqgnomeplatformtheme.so
-%{_qt5_libdir}/qt5/plugins/wayland-decoration-client/libqgnomeplatformdecoration.so
+%{_qt5_plugindir}/platformthemes/libqgnomeplatformtheme.so
+%{_qt5_plugindir}/wayland-decoration-client/libqgnomeplatformdecoration.so
 
 %changelog
+* Tue Apr 18 2023 Jan Grulich <jgrulich@redhat.com> - 0.9.0-1
+- 0.9.0
+  Resolves: bz#2175753
+
 * Fri Apr 01 2022 Jan Grulich <jgrulich@redhat.com> - 0.8.4-2
 - Rebuild (Qt 5.15.3)
   Resolves: bz#2061415
